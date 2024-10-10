@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cinema_booking/consts.dart';
 
+import '../models/category_model.dart';
+
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
 
@@ -21,14 +23,89 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
           searchField(),
           const SizedBox(height: 30),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Category",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "See All",
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: buttonColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: buttonColor,
+                          size: 15,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 17),
+                categoryItems(),
+                SizedBox(height: 40),
+              ],
+            ),
+          )
         ],
+      ),
+    );
+  }
+
+  Row categoryItems() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(
+        categories.length,
+        (index) => Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.white10.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Image.asset(
+                categories[index].emoji,
+                fit: BoxFit.cover,
+                height: 30,
+                width: 30,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              categories[index].name,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Padding searchField() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(vertical: 19),
@@ -38,13 +115,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
           hintStyle: const TextStyle(
             color: Colors.white54,
           ),
-          prefix: const Icon(
+          prefixIcon: const Icon(
             Icons.search,
             size: 35,
           ),
           border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(27),
-              borderSide: BorderSide.none),
+            borderRadius: BorderRadius.circular(27),
+            borderSide: BorderSide.none,
+          ),
         ),
       ),
     );
